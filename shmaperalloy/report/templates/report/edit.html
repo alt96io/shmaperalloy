@@ -1,0 +1,26 @@
+{% extends "report/base.html" %}
+
+{% block content %}
+<!--<h4>Editing {{ taskname.task_name }} </h4>-->
+<!--<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+</form>-->
+<h2><center>New submission</center></h2>
+<div class="container"></div>
+<div class="content container">
+    <div class="row">
+        <div class="col s12">
+            <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+<!--                <button type="submit" class="save btn btn-default">Submit</button>-->
+                <input type="submit" value="Update">
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

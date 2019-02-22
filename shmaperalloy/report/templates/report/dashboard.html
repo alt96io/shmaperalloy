@@ -1,0 +1,31 @@
+{% extends "report/base.html" %}
+
+{% block content %}
+<h2>Welcome!</h2>
+
+<div class="content container">
+    <div class="row">
+        <div class="col s12">
+
+{% if latest_task_list %}
+    <table class="table table-bordered">
+        {% for lists in latest_task_list %}    
+            <tr>
+                <td>{{ lists.task_name }}</td>
+                <td>{{ lists.task_text }}</td>
+                <td>{{ lists.input_contributor }}</td>
+                <td><center>{{ lists.hours_worked }}</center></td>
+                <td><center>Edit</center></td>
+            </tr>
+<!--            <li><a href="/report/{{ taskname.id }}/edit">{{ taskname.task_name }}</a></li> -->
+        {% endfor %}
+    </table> 
+
+{% endif %}
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}

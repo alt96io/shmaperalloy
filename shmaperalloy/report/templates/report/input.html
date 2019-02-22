@@ -1,0 +1,29 @@
+{% extends "report/base.html" %}
+
+{% block content %}
+
+<h2><center>New submission</center></h2>
+<div class="container"></div>
+<div class="content container">
+    <div class="row">
+        <div class="col s12">
+            <form method="POST" class="post-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+<!--                <button type="submit" class="save btn btn-default">Submit</button>-->
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- <form class="form-inline my-4 my-lg-0" method="POST">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="search" placeholder="Name of Task" aria-label="Search" name="task_name">
+    <input class="form-control mr-sm-2" type="search" placeholder="Description of Task" aria-label="Search" name="task_text">
+    <input class="form-control mr-sm-2" type="search" placeholder="Name of Contributor" aria-label="Search" name="input_contributor">
+    <input class="form-control mr-sm-2" type="search" placeholder="Hours Worked" aria-label="Search" name="hours_worked">
+    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Submit</button>
+</form> -->
+{% endblock %}

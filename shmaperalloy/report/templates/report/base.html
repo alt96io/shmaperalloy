@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+     <!--Import Google Icon Font-->
+     <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+     <!--Import materialize.css-->
+     <link type="text/css" rel="stylesheet" href="report/materialize.min.css"  media="screen,projection"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!--    <link rel="stylesheet" type="text/css" href="{% static 'report/base.css' %}">
+-->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+-->
+</head>
+<body>
+
+<!--    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+-->
+    <nav>
+      <div class="container">
+      <div class="nav-wrapper blue darken-4">
+
+        <a href="#" class="brand-alt">ALT96IO</a>
+<!--        <ul class="navbar-nav mr-auto">
+-->
+
+        <ul id="nav-mobile" class="right hide-on-med-and-down blue-text text-lighten-5">
+          <li class="nav-item">
+            <a class="nav-link" href="dashboard">Dashboard </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="input">New Entry</a>
+          </li>
+          <li>
+            <a class="nav-link" href="submissions">Report</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+        </ul>
+      </div>
+      </div>
+    </nav>
+
+
+            {% block content %}
+            {% endblock %}
+
+            <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
+</body>
+
+</html>

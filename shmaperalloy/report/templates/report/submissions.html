@@ -1,0 +1,56 @@
+{% extends "report/base.html" %}
+
+{% block content %}
+<div class="content container">
+    <div class="row">
+        <div class="col s12">
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissable" role="alert">
+            <button class="close" data-dismiss="alert">
+                <small><sup></sup></small>
+            </button>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+       
+<div class="container">
+{% if latest_task_list %}
+    <div>
+    <h6 class="grey lighten-3">Title: Paperalloy Sample <br>Owner: Me</h6>
+    </div>
+    <table class="table table-bordered highlight responsive-table">
+        <thead>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Contributor</th>
+            <th>Hours</th>
+        </thead>
+        <tbody>
+        {% for lists in latest_task_list %}    
+            <tr>
+                <td>{{ lists.task_name }}</td>
+                <td>{{ lists.task_text }}</td>
+                <td>{{ lists.input_contributor }}</td>
+                <td><center>{{ lists.hours_worked }}</center></td>
+ <!--               <td><center><a href="/report/edit/{{ taskname.id }}">Edit</a></center></td>-->
+                <!-- <td><center><a href="{% url 'edit' taskname.id %}">Edit</a></center></td>-->
+<!--                <li><a href="/report/{{ taskname.id }}/edit">{{ taskname.task_name }}</a></li>-->
+<!--                <li><a href="{{ taskname.get_absolute_url }}">Edit</a></li>-->
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+                
+{% else %}
+    <p>No submissions entered.</p>
+{% endif %}
+</div>
+
+</div>
+</div>
+</div>
+
+{% endblock %}
