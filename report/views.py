@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from django.views.generic.edit import UpdateView, CreateView
+#from django.views.generic.edit import UpdateView, CreateView
 from django.urls import reverse
 
 from .models import Taskname
@@ -18,7 +18,6 @@ from .forms import SubmissionForm
 #    template_name_suffix = '_update_form'
 
 def dashboard(request):
-#    return HttpResponse("Welcome, Jimmy Bob")
     latest_task_list = Taskname.objects.order_by('-input_date')[:100]
     return render(request, 'report/dashboard.html', {'latest_task_list': latest_task_list})
 
@@ -44,7 +43,8 @@ def input(request):
 
     return render(request, 'report/input.html', {'form': form})
 
-#def edit(request, taskname_id):
+def edit(request, taskname_id):
+        #task = get_object_or_404(Taskname, pk=taskname_id)
 #    if request.method == 'POST':
 #        task = Taskname.objects.get(pk=taskname_id)
 #        form = SubmissionForm(task)
@@ -60,6 +60,7 @@ def input(request):
 #        form = SubmissionForm(task)
 #        form = SubmissionUpdate(task)
 #    return render(request, 'report/edit.html', {'form':form})   
+    return HttpResponse("Edit data here")
 
 
 def submissions(request):
