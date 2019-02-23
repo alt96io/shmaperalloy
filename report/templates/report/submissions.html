@@ -35,10 +35,7 @@
                 <td>{{ lists.task_text }}</td>
                 <td>{{ lists.input_contributor }}</td>
                 <td><center>{{ lists.hours_worked }}</center></td>
- <!--               <td><center><a href="/report/edit/{{ taskname.id }}">Edit</a></center></td>-->
-                <!-- <td><center><a href="{% url 'edit' taskname.id %}">Edit</a></center></td>-->
-<!--                <li><a href="/report/{{ taskname.id }}/edit">{{ taskname.task_name }}</a></li>-->
-<!--                <li><a href="{{ taskname.get_absolute_url }}">Edit</a></li>-->
+                <td><center>Edit</center></td>
             </tr>
         {% endfor %}
         </tbody>

@@ -23,7 +23,7 @@ def dashboard(request):
 
 def input(request):
 
-    form = SubmissionForm()
+#    form = SubmissionForm()
 #    return render(request, 'report/input.html', {'form': form})
     if request.method == 'POST':
         form = SubmissionForm(request.POST)
@@ -31,9 +31,9 @@ def input(request):
         if form.is_valid():
             form.save()
             latest_task_list = Taskname.objects.order_by('-input_date')[:100]
-#            messages.success(request, ('Submission has been logged!'))
-#            return render(request, 'report/submissions.html', {'latest_task_list': latest_task_list})
-            return HttpResponse("The form is valid.")
+            messages.success(request, ('Submission has been logged!'))
+            return render(request, 'report/submissions.html', {'latest_task_list': latest_task_list})
+#            return HttpResponse("The form is valid.")
     
     else:
         form = SubmissionForm()
@@ -44,23 +44,23 @@ def input(request):
     return render(request, 'report/input.html', {'form': form})
 
 def edit(request, taskname_id):
-        #task = get_object_or_404(Taskname, pk=taskname_id)
-#    if request.method == 'POST':
+    task = get_object_or_404(Taskname, pk=taskname_id)
+    if request.method == 'POST':
 #        task = Taskname.objects.get(pk=taskname_id)
-#        form = SubmissionForm(task)
+        form = SubmissionForm(task)
 #        form = SubmissionUpdate(task)
-#        if form.is_valid():
-#            form.save()
-#            latest_task_list = Taskname.objects.order_by('-input_date')[:100]
+        if form.is_valid():
+            form.save()
+            latest_task_list = Taskname.objects.order_by('-input_date')[:100]
 #    task.delete()
 #            messages.success(request, ('Submission has been edited.'))
 #            return redirect('submissions')
-#    else:
+    else:
 #        task = Taskname.objects.get(pk=taskname_id)
-#        form = SubmissionForm(task)
+        form = SubmissionForm(task)
 #        form = SubmissionUpdate(task)
 #    return render(request, 'report/edit.html', {'form':form})   
-    return HttpResponse("Edit data here")
+    return HttpResponseRedirect(reverse('edit', args=(taskname_id)))
 
 
 def submissions(request):
