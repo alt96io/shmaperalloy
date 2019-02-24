@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
      <!-- Import materialize.css -->
-     <link type="text/css" rel="stylesheet" href="report/materialize.css"  media="screen,projection"/>
+     <link type="text/css" rel="stylesheet" href="{% static 'report/materialize.css' %}"  media="screen,projection"/>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
      <!--Let browser know website is optimized for mobile-->
@@ -31,13 +31,13 @@
 
         <ul id="nav-mobile" class="right hide-on-med-and-down blue-text text-lighten-5">
           <li class="nav-item">
-            <a class="nav-link" href="dashboard">Dashboard </a>
+            <a class="nav-link" href="{% url 'report:dashboard' %}">Dashboard </a> 
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="input">New Entry</a>
+            <a class="nav-link" href="{% url 'report:input' %}">New Entry</a>
           </li>
           <li>
-            <a class="nav-link" href="submissions">Report</a>
+            <a class="nav-link" href="{% url 'report:submissions' %}">Report</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Profile</a>
