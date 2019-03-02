@@ -47,13 +47,19 @@ def edit(request, pk):
         if form.is_valid():
             form.save()
             latest_task_list = Taskname.objects.order_by('-input_date')[:100]
-#    task.delete()
             messages.success(request, ('%s has been edited.' % task.task_name))
             return render(request, 'report/submissions.html', {'latest_task_list': latest_task_list})
     else:
         form = SubmissionForm(instance=task)
         return render(request, 'report/edit.html', {'form':form})
     return render(request, 'report/edit.html', {'form':form})   
+
+def deletion(request, pk):
+    task = get_object_or_404(Taskname, pk=pk)
+    task.delete()
+    latest_task_list = Taskname.objects.order_by('-input_date')[:100]
+    messages.success(request, ('Submission has been deleted.'))
+    return HttpResponseRedirect(reverse('report:submissions'))
 
 def submissions(request):
     latest_task_list = Taskname.objects.order_by('-input_date')[:100]

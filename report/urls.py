@@ -8,5 +8,6 @@ urlpatterns = [
     path('input', views.input, name='input'),
     path('submissions/<int:pk>', views.edit, name='edit'),
     path('submissions', views.submissions, name='submissions'),
+    path('deletion/<int:pk>', views.deletion, name='deletion'),
     path('completed', views.completed, name='completed'),
 ]

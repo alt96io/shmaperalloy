@@ -2,3 +2,32 @@ h6 {
     padding: 10px;
     margin-top: 20px;
 }
+
+i {
+    background-color: darkblue;
+    padding: 5px;
+}
+
+.material-icons.md-light { color: rgba(255,255,255,1); }
+
+.brand-alt {
+    padding-left: 10px;
+}
+
+#logged {
+    width: 100%;
+}
+
+@media screen and (min-width: 600px) {
+    #logged {
+        width: 500px;
+        margin: auto;
+    }
+}
+
+@media screen and (min-width: 798px) {
+    #logged {
+        width: 600px;
+        margin: auto;
+    }
+}
