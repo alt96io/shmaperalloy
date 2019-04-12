@@ -3,8 +3,17 @@ import datetime
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+from django.template.defaultfilters import slugify
+
+class Docname(models.Model):
+    doc_name = models.CharField(max_length=50)
+    doc_text = models.TextField(max_length=250, blank=True)
+    doc_creator = models.CharField(max_length=40)
+    input_date = models.DateTimeField(default=timezone.now)
+    page_slug = models.SlugField()
 
 class Taskname(models.Model):
+    docname = models.ForeignKey(Docname, on_delete=models.CASCADE, default=1)
     task_name = models.CharField(max_length=200)
     task_text = models.TextField('submission')
     input_contributor = models.CharField(max_length=40)
@@ -13,14 +22,14 @@ class Taskname(models.Model):
     input_date = models.DateTimeField(default=timezone.now)
     edit_date = models.DateTimeField(default=timezone.now)
 
-    # Represent status of project. Could create custom Model Field.
-    NOTSTARTED = 0
-    INPROGRESS = 1
-    COMPLETE = 2
+    # Represent status of comment. Could create custom Model Field.
+    SUBMITTED = 0
+    APPROVED = 1
+    DISAPPROVED = 2
     STATUS_CHOICES = (
-        (NOTSTARTED, 'Not Started'),
-        (INPROGRESS, 'In Progress'),
-        (COMPLETE, 'Complete'),
+        (SUBMITTED, 'Submitted'),
+        (APPROVED, 'Approved'),
+        (DISAPPROVED, 'Disapproved'),
     )
     task_status = models.IntegerField(
         choices=STATUS_CHOICES,

@@ -1,0 +1,27 @@
+{% extends "report/base_creator.html" %}
+
+{% block content %}
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Register Account</legend>
+                {{ form.as_p }}
+            </fieldset>>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Register</button>
+            </div>
+
+            
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already have an account?
+                <a class="ml-2" href="#">Login</a>
+            </small>
+        </div>
+    </div>
+
+
+
+{% endblock %}

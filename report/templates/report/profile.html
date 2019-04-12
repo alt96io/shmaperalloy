@@ -1,0 +1,21 @@
+{% extends "report/base_creator.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 m4 l3">
+<!--            <i class="material-icons md-48">account_box</i> -->
+
+            <img src="{{ profile_pic }}" alt="Profile picture" id="profile_pic">
+        </div>
+
+        <div class="col s12 m4 l3" id="profile_info">
+            <h6>Name: Chewbacca</h6>
+            <h6>Job Title: Programmer</h6>
+            <h6>Email: wookie@gmail.com</h6>
+            <h6>Phone Number: 555-2222</h6>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

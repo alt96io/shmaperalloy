@@ -1,5 +1,10 @@
-h6 {
-    padding: 10px;
+body {
+    margin: 0;
+    padding: 0;
+}
+
+h4 {
+    padding: 10px 0px 0px 10px;
     margin-top: 20px;
 }
 
@@ -14,8 +19,24 @@ i {
     padding-left: 10px;
 }
 
+#content_table {
+    
+}
+
 #logged {
     width: 100%;
+}
+
+#profile_pic{
+    width: 400px;
+    height: auto;
+    float: left;
+}
+
+#profile_info{
+    background-color: rgb(230, 230, 230, .9);
+    width: 400px;
+    float: right;
 }
 
 @media screen and (min-width: 600px) {
