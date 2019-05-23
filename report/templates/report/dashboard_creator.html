@@ -20,13 +20,13 @@
         <tbody>
         {% for lists in document_list %}    
             <tr>
-                    <td>{{ lists.doc_name }}</td>
-                    <td>{{ lists.doc_creator }}</td>
-                    <td>{{ lists.input_date }}</td>
-                    <td><a href="{% url 'report:input' lists.page_slug %}"><center><i class="material-icons md-light hoverable">create</i></center></a></td>
+                
+                <td><a href="{% url 'report:submissions' lists.page_slug %}">{{ lists.doc_name }}</a></td>
+                <td>{{ lists.doc_creator }}</td>
+                <td>{{ lists.input_date }}</td>
+                <td><a href="{% url 'report:input' lists.page_slug %}"><center><i class="material-icons md-light hoverable">create</i></center></a></td>
                 <td><center><a href="{% url 'report:erase' lists.page_slug %}"><i class="material-icons md-light hoverable">clear</i></a></center></td>
             </tr>
-
         {% endfor %}
         </tbody>
     </table> 

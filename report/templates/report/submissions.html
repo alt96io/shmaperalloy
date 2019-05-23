@@ -38,7 +38,8 @@
         
                 
 {% if latest_task_list %}
-    <form action="">
+    <form action="" name="TaskForm" method="POST">
+            {% csrf_token %}
     <table class="table table-bordered highlight responsive-table">
         <thead>
             <th>Section</th>
@@ -46,10 +47,9 @@
             <th>Member</th>
             <th>Hours</th>
             <th>Date Created</th>
-            <th>Status</th>
         </thead>
         <tbody id="content_table">
-        {% for lists in latest_task_list %}    
+        {% for lists in latest_task_list %}   
             <tr>
                 <td>
                     <label>
@@ -61,14 +61,13 @@
                 <td>{{ lists.input_contributor }}</td>
                 <td><center>{{ lists.hours_worked }}</center></td>
                 <td>{{ lists.input_date }}</td>
-                <td>{{ lists.task_status }}</td>
-                <td><a href="{% url 'report:edit' page_slug lists.pk %}"><center><i class="material-icons md-light hoverable">create</i></center></a></td>
-                <td><center><a href="{% url 'report:deletion' page_slug lists.pk %}"><i class="material-icons md-light hoverable">clear</i></a></center></td>
+                <td><a href="{% url 'report:edit' page_slug lists.pk %}"><center>Edit</center></a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <button type="submit" name="approve">Approve</button>
+    <button class="waves-effect waves-light btn" type="submit" name="delete" formaction="{% url 'report:delete' page_slug %}">Delete</button>
+    <a class="waves-effect waves-light btn" href="{% url 'report:input' page_slug %}">Add Task</a>
     </form>     
 {% else %}
     <p>No submissions entered.</p>
@@ -93,5 +92,18 @@
     </div>
 </div>
 
+<!--
+<script type=text/javascript>
+function updateStatus(latest_task_list){
+    document.getElementById("test").innerHTML = "You clicked the button";
+    alert(latest_task_list);
+    for (i=0; i<3;i++) {
+        if (TaskForm.tasks[i].checked) {
+            latest_task_list[i].task_status = 1;
+        }
+    }
+}
+</script>
+-->
 
 {% endblock %}

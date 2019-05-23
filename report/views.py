@@ -88,26 +88,59 @@ def deletion(request, page_slug, pk):
     messages.success(request, ('Submission has been deleted.'))
     return HttpResponseRedirect(reverse('report:submissions', args=(doc.page_slug,)))
 
+def delete(request, page_slug):
+    doc = get_object_or_404(Docname, page_slug=page_slug)
+    latest_task_list = Taskname.objects.order_by('-input_date')[:100]
+    if request.method == 'POST':
+        if 'delete' in request.POST:
+            for item in request.POST.get('tasks'):
+                t = get_object_or_404(Taskname, pk=item)
+                t.delete()
+                messages.success(request, ('%s was deleted.' % t.task_name))
+    return HttpResponseRedirect(reverse('report:submissions', args=(doc.page_slug,)))
+
+def approval(request, page_slug):
+    doc = get_object_or_404(Docname, page_slug=page_slug)
+    
+    if request.method == 'POST':
+        tasks = request.POST.get('tasks')
+#        for item in tasks:
+        t = get_object_or_404(Taskname, pk=tasks)
+        t.task_status = 1
+        latest_task_list = Taskname.objects.order_by('-input_date')[:100]
+        messages.success(request, ('%s is the object retrieved.' % t.task_name))
+#        messages.success(request, ('%s was approved.' % tasks))
+    return HttpResponseRedirect(reverse('report:submissions', args=(doc.page_slug,)))
+
 def submissions(request, page_slug):
     doc = get_object_or_404(Docname, page_slug=page_slug)
     latest_task_list = Taskname.objects.filter(docname__page_slug=page_slug).order_by('-input_date')[:100]
 #    t = get_object_or_404(Taskname, pk=1)
 #    t2 = get_object_or_404(Taskname, pk=1)
-    if request.method == 'POST':
+#    if request.method == 'POST':
 #        t = get_object_or_404(Taskname, pk=2)
 #        for item in request.POST.get('tasks'):
 #            t = get_object_or_404(Taskname, pk=item)
 #            t.task_status = 1
-        form = ApprovalForm(request.POST)
-        if 'approve' in request.POST:
+#        form = ApprovalForm(request.POST)
+#        if 'approve' in request.POST:
 #                for item in form.POST.getlist('tasks'):
-            for item in form.cleaned_data['tasks']:
-                item.task_status = 1
+#            for item in form.cleaned_data['tasks']:
+#                item.task_status = 1
 #                t = get_object_or_404(Taskname, pk=item)
 #                    t = latest_task_list.filter(pk=item)
 #                    t.task_status = 1
 
     return render(request, 'report/submissions.html', {'page_slug': page_slug, 'doc': doc, 'latest_task_list': latest_task_list})
+
+#def approval(request, page_slug):
+#    doc = get_object_or_404(Docname, page_slug=page_slug)
+#    latest_task_list = Taskname.objects.order_by('-input_date')[:100]
+#    if request.method=='POST':
+#        print(tasks)
+#    return HttpResponseRedirect(request.GET.get('next'))
+#    return HttpResponseRedirect(reverse('report:submissions', args=(doc.page_slug,)))
+#    return render(request, 'report/submissions.html', {'page_slug': page_slug, 'doc': doc, 'latest_task_list': latest_task_list})
 
 def profile(request):
     return render(request, 'report/profile.html')
