@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'accounts.Member'
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.security.SecurityMiddleware',  #when deployed, if possible use Web server security instead
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -125,5 +125,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 MEDIA_URL = '/media/'
+
+LOGIN_REDIRECT_URL = 'report:dashboard_creator'
+LOGIN_URL = 'login'

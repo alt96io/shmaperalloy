@@ -1,13 +1,18 @@
 from django.core.files.storage import FileSystemStorage
 from django.db import models
+#from django.contrib.auth.models import User
 from django.contrib.auth.models import (
-    AbstractBaseUser, BaseUserManager, PermissionsMixin
+    AbstractBaseUser, BaseUserManager,
 )
+from PIL import Image
 
 fs = FileSystemStorage()
 
 class MemberManager(BaseUserManager):
+    use_in_migrations = True
+
     def create_user(self, email, password=None, is_staff=False, is_admin=False, is_active=True):
+#    def _create_user(self, email, password, is_staff=False, is_admin=False, is_active=True):
         if not email:
             raise ValueError("Members must have an email address")
         if not password:
@@ -20,8 +25,9 @@ class MemberManager(BaseUserManager):
         member.admin = is_admin
         member.active = is_active
         member.save(using=self._db)
-        return  member
+        return member
 
+#create member that can create documents
     def create_staffuser(self, email, password=None):
         member = self.create_user(
             email,
@@ -30,6 +36,7 @@ class MemberManager(BaseUserManager):
         )
         return  member
 
+#create member with admin rights
     def create_superuser(self, email, password=None):
         member = self.create_user(
             email,
@@ -51,6 +58,8 @@ class Member(AbstractBaseUser):
     # USERNAME_FIELD and password are required by default
     REQUIRED_FIELDS = []
 
+ #   objects = models.Manager()
+ #   objects_active = MemberManager()
     objects = MemberManager()
 
     def __str__(self):
@@ -87,13 +96,27 @@ class Member(AbstractBaseUser):
 
 class Profile(models.Model):
     member      = models.OneToOneField(Member, on_delete=models.CASCADE)
+#    member = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name  = models.CharField(max_length=255, blank=True)
     last_name   = models.CharField(max_length=255, blank=True)
     address     = models.CharField(max_length=255, blank=True)
     cell_phone  = models.CharField(max_length=15, blank=True)
     home_phone  = models.CharField(max_length=15, blank=True)
     work_phone  = models.CharField(max_length=15, blank=True)
+    job_title   = models.CharField(max_length=255, blank=True)
     photo       = models.ImageField(default='report/chewbaccaheadshot.jpeg', upload_to='profilePics/')
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} Profile'
+        return f'{self.first_name} {self.last_name} Profile' 
+#        return f'{self.member.username} Profile'
+#
+##KEEP IMAGE FILE BELOW A SPECIFIED SIZE
+#    def save(self):
+#        super().save()
+#
+#        img = Image.open(self.photo.path)
+#
+#        if img.height > 300 or img.width > 300:
+#            output_size = (300, 300)
+#            img.thumbnail(output_size)
+#            img.save()
