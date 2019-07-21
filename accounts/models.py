@@ -12,7 +12,6 @@ class MemberManager(BaseUserManager):
     use_in_migrations = True
 
     def create_user(self, email, password=None, is_staff=False, is_admin=False, is_active=True):
-#    def _create_user(self, email, password, is_staff=False, is_admin=False, is_active=True):
         if not email:
             raise ValueError("Members must have an email address")
         if not password:
@@ -55,7 +54,7 @@ class Member(AbstractBaseUser):
     confirm     = models.BooleanField(default=False)  # confirmed email
 
     USERNAME_FIELD = 'email'
-    # USERNAME_FIELD and password are required by default
+    ## USERNAME_FIELD AND PASSWORD ARE REQUIRED BY DEFAULT
     REQUIRED_FIELDS = []
 
  #   objects = models.Manager()
@@ -65,9 +64,9 @@ class Member(AbstractBaseUser):
     def __str__(self):
         return self.email
 
-#    def get_full_name(self):
-#        full_name = self.first_name + " " + self.last_name
-#        return full_name
+    def full_name(self):
+        fullname = self.profile.first_name + " " + self.profile.last_name
+        return fullname
     
 #    def get_short_name(self):
 #        return self.first_name
@@ -94,9 +93,26 @@ class Member(AbstractBaseUser):
     def confirmed_email(self):
         return self.confirm
 
+#class Role(models.Model):
+#    ROLE_CHOICES = (
+#        ('O', 'Owner'),
+#        ('C', 'Contributor'),
+#        ('V', 'Viewer'),
+#    )
+#    assigned_role        = models.CharField(max_length=1, choices=ROLE_CHOICES, null=True)
+#    member      = models.ManyToManyField(Member, on_delete=models.SET_NULL, null=True, blank=True, related_name='member_role')
+#    doc         = models.ManyToManyField(Docname, on_delete=models.SET_NULL, null=True, blank=True, related_name='doc_role')
+
+#    @classmethod
+#    def assign_contributor(cls, selected_role, current_document, selected_member):
+#        role, created = cls.objects.get_or_create(
+#            selected_role = 'C'
+#        )
+#        role.member.add(selected_member)
+#        role.doc.add(current_document)
+
 class Profile(models.Model):
     member      = models.OneToOneField(Member, on_delete=models.CASCADE)
-#    member = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name  = models.CharField(max_length=255, blank=True)
     last_name   = models.CharField(max_length=255, blank=True)
     address     = models.CharField(max_length=255, blank=True)
@@ -108,9 +124,8 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name} Profile' 
-#        return f'{self.member.username} Profile'
 #
-##KEEP IMAGE FILE BELOW A SPECIFIED SIZE
+##TO CONTROL SIZE OF IMAGE FILE
 #    def save(self):
 #        super().save()
 #

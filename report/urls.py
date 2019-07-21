@@ -6,7 +6,7 @@ from . import views
 app_name = 'report'
 urlpatterns = [
     path('dashboard', views.dashboard, name='dashboard'),
-    path('dashboard_creator', views.dashboard_creator, name='dashboard_creator'),
+#    path('dashboard_creator', views.dashboard_creator, name='dashboard_creator'),
     path('create', views.create, name='create'),
     path('documents', views.documents, name='documents'),
     path('erase/<page_slug>', views.erase, name='erase'),

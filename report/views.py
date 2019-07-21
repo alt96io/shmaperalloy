@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 #from django.views.generic.edit import UpdateView, CreateView
 from django.urls import reverse
 from django.template.defaultfilters import slugify
@@ -8,13 +9,15 @@ from django.template.defaultfilters import slugify
 from .models import Taskname, Docname
 from .forms import SubmissionForm, DocForm, ApprovalForm
 
+@login_required
 def dashboard(request):
-    latest_task_list = Taskname.objects.all().order_by('-input_date')
-    return render(request, 'report/dashboard.html', {'latest_task_list': latest_task_list})
-
-def dashboard_creator(request):
+#    latest_task_list = Taskname.objects.all().order_by('-input_date')
     document_list = Docname.objects.order_by('-input_date')[:100]
-    return render(request, 'report/dashboard_creator.html', {'document_list': document_list})
+    return render(request, 'report/dashboard.html', {'document_list': document_list})
+
+#def dashboard_creator(request):
+#    document_list = Docname.objects.order_by('-input_date')[:100]
+#    return render(request, 'report/dashboard_creator.html', {'document_list': document_list})
 
 def create(request):
     form = DocForm(request.POST)
@@ -22,7 +25,10 @@ def create(request):
         form = DocForm(request.POST)
         if form.is_valid():
             doc = form.save(commit=False)
+            doc.doc_creator = request.user
             doc.page_slug = slugify(doc.doc_name)
+            doc.save()
+            doc.owner.add(request.user)
             doc.save()
             document_list = Docname.objects.order_by('-input_date')[:100]
             messages.success(request, ('Document has been created!'))
@@ -44,6 +50,7 @@ def documents(request):
     document_list = Docname.objects.order_by('-input_date')[:100]
     return render(request, 'report/documents.html', {'document_list': document_list})
 
+@login_required
 def input(request, page_slug):
     doc = get_object_or_404(Docname, page_slug=page_slug)
     if request.method == 'POST':

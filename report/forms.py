@@ -17,7 +17,8 @@ class SubmissionForm(forms.ModelForm):
 class DocForm(forms.ModelForm):
     class Meta:
         model = Docname
-        fields = ["doc_name", "doc_text", "doc_creator"]
+#        fields = ["doc_name", "doc_text", "doc_creator"]
+        fields = ["doc_name", "doc_text"]
 
 #customizing ModelChoiceField in Django to have more control over object data
 class NewModelChoiceIterator(models.ModelChoiceIterator):

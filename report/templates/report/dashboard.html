@@ -1,45 +1,79 @@
-{% extends "report/base_creator.html" %}
+{% extends "report/base.html" %}
 
 {% block content %}
 <h2><center>Welcome!</center></h2>
 
-<div class="container">
-    <div class="row">
-        <div class="col s12">
 
-<div class="container">
+{% if document_list %}
+
     <div id="logged">
+        <div class="grey lighten-3">
+            <h4>Owner Report List</h4>
+            <div style="padding: 0px 10px 10px 10px;">
 
-{% if latest_task_list %}
-    <table class="table table-bordered highlight reponsive-table">
+    <table class="table table-bordered highlight white">
         <thead>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Contributor</th>
-            <th>Hours</th>
+            <th>Report Name</th>
+            <th>Owner</th>
+            <th>Date Created</th>
+            <th>Add</th>
+            <th>Delete</th>
         </thead>
         <tbody>
-        {% for lists in latest_task_list %}    
-            <tr>
-                <td>{{ lists.task_name }}</td>
-                <td>{{ lists.task_text }}</td>
-                <td>{{ lists.input_contributor }}</td>
-                <td><center>{{ lists.hours_worked }}</center></td>
-                <td><a href="{% url 'report:edit' lists.pk %}"><center><i class="material-icons md-light hoverable">create</i></center></a></td>
-                <td><center><a href="{% url 'report:deletion' lists.pk %}"><i class="material-icons md-light hoverable">clear</i></a></center></td>
-            </tr>
+        {% for lists in document_list %}
+            {% if lists.doc_creator == user %}    
+                <tr>
+                
+                    <td><a href="{% url 'report:submissions' lists.page_slug %}">{{ lists.doc_name }}</a></td>
+                    <td>{{ lists.doc_creator }}</td>
+                    <td>{{ lists.input_date }}</td>
+                    <td><a href="{% url 'report:input' lists.page_slug %}"><center><i class="material-icons md-light hoverable">create</i></center></a></td>
+                    <td><center><a href="{% url 'report:erase' lists.page_slug %}"><i class="material-icons md-light hoverable">clear</i></a></center></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table> 
+            </div>
+        </div>
+    </div>
 
+
+        <div id="logged">
+            <div class="grey lighten-3">
+                <h4> Contributor Report List</h4>
+                <div style="padding: 0px 10px 10px 10px;">
+
+    <table class="table table-bordered highlight white">
+        <thead>
+            <th>Report Name</th>
+            <th>Owner</th>
+            <th>Date Created</th>
+            <th>Add</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+        {% for lists in document_list %}
+            {% if lists.doc_creator != user %}    
+                <tr>
+                
+                    <td><a href="{% url 'report:submissions' lists.page_slug %}">{{ lists.doc_name }}</a></td>
+                    <td>{{ lists.doc_creator }}</td>
+                    <td>{{ lists.input_date }}</td>
+                    <td><a href="{% url 'report:input' lists.page_slug %}"><center><i class="material-icons md-light hoverable">create</i></center></a></td>
+                    <td><center><a href="{% url 'report:erase' lists.page_slug %}"><i class="material-icons md-light hoverable">clear</i></a></center></td>
+                </tr>
+            {% endif %}
         {% endfor %}
         </tbody>
     </table> 
 
-{% endif %}
+            </div>
+        </div>
     </div>
-</div>
 
-</div>
-</div>
-</div>
+{% endif %}
 
 
-{% endblock %}
+
+{% endblock %} 

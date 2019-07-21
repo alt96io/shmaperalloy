@@ -14,6 +14,14 @@ class Docname(models.Model):
     doc_creator = models.ForeignKey(Member, on_delete=models.PROTECT)
     input_date = models.DateTimeField(default=timezone.now)
     page_slug = models.SlugField()
+    owner = models.ManyToManyField(Member, blank=True, related_name='doc_owner')
+    contributor = models.ManyToManyField(Member, blank=True, related_name='doc_contributor')
+
+    def assign_contributor(current_document, selected_member):
+        current_document.contributor.add(selected_member)
+
+    def assign_owner(current_document, selected_member):
+        current_document.owner.add(selected_member)
 
     def __str__(self):
         return self.doc_name

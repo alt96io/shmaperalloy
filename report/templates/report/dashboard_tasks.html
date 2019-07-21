@@ -1,0 +1,45 @@
+{% extends "report/base.html" %}
+
+{% block content %}
+<h2><center>Welcome!</center></h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+
+<div class="container">
+    <div id="logged">
+
+{% if latest_task_list %}
+    <table class="table table-bordered highlight reponsive-table">
+        <thead>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Contributor</th>
+            <th>Hours</th>
+        </thead>
+        <tbody>
+        {% for lists in latest_task_list %}    
+            <tr>
+                <td>{{ lists.task_name }}</td>
+                <td>{{ lists.task_text }}</td>
+                <td>{{ lists.input_contributor }}</td>
+                <td><center>{{ lists.hours_worked }}</center></td>
+                <td><a href="{% url 'report:edit' lists.pk %}"><center><i class="material-icons md-light hoverable">create</i></center></a></td>
+                <td><center><a href="{% url 'report:deletion' lists.pk %}"><i class="material-icons md-light hoverable">clear</i></a></center></td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table> 
+
+{% endif %}
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}
